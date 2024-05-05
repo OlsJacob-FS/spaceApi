@@ -1,5 +1,5 @@
-<h1> Edit {{Galaxy.name}}</h1>
-{% block pagename %}Edit {{Galaxy.name}}{% endblock %}
+<h1> Edit {{planet.name}}</h1>
+{% block pagename %}Edit {{planet.name}}{% endblock %}
 {% block main %}
-{% include 'views/galaxy/_form.twig' with { "galaxy": galaxy} %}
+{% include 'views/planet/_form.twig' with { "planet": planet} %}
 {% endblock %}

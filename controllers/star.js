@@ -2,8 +2,8 @@ const { Star } = require("../models");
 // Show all resources
 const index = async (req, res) => {
   try {
-    const stars = await Star.findAll();
-    res.status(200).json(stars);
+    const star = await Star.findAll();
+    res.render("views/star/index.twig", { star });
   } catch (e) {
     switch (e.name) {
       case "Invalid Content":
@@ -12,15 +12,12 @@ const index = async (req, res) => {
   }
 };
 
-// Show resource
+// Show resource //planets
 const show = async (req, res) => {
   try {
     const stars = await Star.findByPk(req.params.id);
     const planets = await stars.getPlanets();
-    res.status(200).json({
-      stars,
-      planets,
-    });
+    res.render("views/star/show.twig", { galaxy });
   } catch (e) {
     switch (e.name) {
       case "Invalid Content":
@@ -32,8 +29,8 @@ const show = async (req, res) => {
 // Create a new resource
 const create = async (req, res) => {
   try {
-    const stars = await Star.create(req.body);
-    res.status(200).json(stars);
+    const star = await Star.create(req.body);
+    res.redirect(303, `/stars/${star.id}`);
   } catch (e) {
     switch (e.name) {
       case "Invalid Content":
@@ -51,10 +48,10 @@ const create = async (req, res) => {
 const update = async (req, res) => {
   try {
     const { id } = req.params;
-    const stars = await Star.update(req.body, {
+    await Star.update(req.body, {
       where: { id },
     });
-    res.status(200).json({ stars });
+    res.redirect(302, `/stars/${req.params.id}`);
   } catch (e) {
     switch (e.name) {
       case "Content Not Found":
@@ -76,7 +73,7 @@ const remove = async (req, res) => {
       where: { id },
     });
     if (deleted) {
-      res.status(200).redirect("/stars");
+      res.redirect(302, `/stars`);
     }
   } catch (e) {
     switch (e.name) {
@@ -90,6 +87,14 @@ const remove = async (req, res) => {
     }
   }
 };
+const form = async (req, res) => {
+  if ("undefined" !== typeof req.params.id) {
+    const star = await Star.findByPk(req.params.id);
+    res.render("views/star/_form.twig", { star });
+  } else {
+    res.render("views/star/_form.twig");
+  }
+};
 
 // Export all controller actions
-module.exports = { index, show, create, update, remove };
+module.exports = { index, show, create, update, remove, form };

@@ -17,15 +17,10 @@ const index = async (req, res) => {
 const show = async (req, res) => {
   try {
     // Respond with a single object and 2xx code
-    //const { id } = req.params;
+
     const galaxy = await Galaxy.findByPk(req.params.id);
 
-    //const galaxy = await Galaxy.find
     res.render("views/galaxy/show.twig", { galaxy });
-    // res.status(200).json({
-    //   galaxy,
-    //   stars,
-    // });
   } catch (e) {
     switch (e.name) {
       case "Invalid Content":

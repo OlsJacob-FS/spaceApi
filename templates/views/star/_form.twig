@@ -1,19 +1,19 @@
-{% if planets is defined %}
-    <form action="/planets/{{ planet.id }}" method="POST">
-    <input type="hidden" value="{{planet.id }}" />
+{% if galaxy is defined %}
+    <form action="/galaxies/{{ galaxy.id }}" method="POST">
+    <input type="hidden" value="{{galaxy.id }}" />
     {% else %}
-    <form action="/planets" method="POST">
+    <form action="/galaxies" method="POST">
 {% endif %}
 
      {% block main %}
-    <a href="/planets">Home</a>
+    <a href="/galaxies">Home</a>
     <div class="control">
         <label>Name:</label>
         <input 
             type="text"
             name="name" 
-            {% if planets is defined %}
-            value="{{ planets.name }}"
+            {% if galaxy is defined %}
+            value="{{ galaxy.name }}"
             {% endif %}
         />
     </div>
@@ -22,19 +22,19 @@
         <input 
             type="integer"
             name="size" 
-            {% if planets is defined %}
-            value="{{ planets.size }}"
+            {% if galaxy is defined %}
+            value="{{ galaxy.size }}"
             {% endif %}
         />
     </div>
 
      <div class="control">
         <label>Description:</label>
-        <textarea name="description">{{ planets.description }}</textarea>
+        <textarea name="description">{{ galaxy.description }}</textarea>
     </div>
 
      <button type="submit">
-     {% if planets is defined %}Update{% else %}Create{% endif %} Planet
+     {% if galaxy is defined %}Update{% else %}Create{% endif %} Galaxy
      </button> 
 </form> 
 
