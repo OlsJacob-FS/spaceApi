@@ -14,5 +14,11 @@ router.get(`/:id`, galaxyCtlr.show);
 router.put(`/:id`, galaxyCtlr.update);
 router.delete(`/:id`, galaxyCtlr.remove);
 
+//HTML RESTFUL routes
+router.get("/new", galaxyCtlr.form);
+router.get("/:id/edit", galaxyCtlr.form);
+router.get("/:id/delete", galaxyCtlr.remove);
+router.post("/:id", galaxyCtlr.update);
+
 // export "router"
 module.exports = router;

@@ -62,7 +62,7 @@ const update = async (req, res) => {
     const galaxy = await Galaxy.update(req.body, {
       where: { id },
     });
-    res.status(200).json(galaxy);
+    res.status(200).redirect("/galaxies");
   } catch (e) {
     switch (e.name) {
       case "Content Not Found":
@@ -99,5 +99,16 @@ const remove = async (req, res) => {
   }
 };
 
+const form = async (req, res) => {
+  if ("undefined" !== typeof req.params.id) {
+    const galaxy = await Galaxy.finByPk(req.params.id);
+    res.render("views/galaxy/edit.twig", { galaxy });
+  } else {
+    res.render("views/galaxy/_form.twig");
+  }
+
+  //res.status(200).json("Galaxy#form(:id)");
+};
+
 // Export all controller actions
-module.exports = { index, show, create, update, remove };
+module.exports = { index, show, create, update, remove, form };

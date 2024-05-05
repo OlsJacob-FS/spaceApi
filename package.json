@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "express": "^4.19.2",
-    "sequelize": "^6.37.3"
+    "sequelize": "^6.37.3",
+    "twig": "^1.17.1"
   }
 }
