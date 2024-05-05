@@ -4,8 +4,8 @@ const { Galaxy } = require("../models/");
 const index = async (req, res) => {
   try {
     const galaxy = await Galaxy.findAll();
-    // Respond with an array and 2xx status code
-    res.status(200).json(galaxy);
+    //res.json(galaxy);
+    res.render("views/galaxy/index.twig", { galaxy });
   } catch (e) {
     switch (e.name) {
       case "Invalid Content":
@@ -13,19 +13,19 @@ const index = async (req, res) => {
     }
   }
 };
-
 // Show resource
 const show = async (req, res) => {
   try {
     // Respond with a single object and 2xx code
     //const { id } = req.params;
     const galaxy = await Galaxy.findByPk(req.params.id);
-    const stars = await galaxy.getStars();
+
     //const galaxy = await Galaxy.find
-    res.status(200).json({
-      galaxy,
-      stars,
-    });
+    res.render("views/galaxy/show.twig", { galaxy });
+    // res.status(200).json({
+    //   galaxy,
+    //   stars,
+    // });
   } catch (e) {
     switch (e.name) {
       case "Invalid Content":
@@ -37,9 +37,8 @@ const show = async (req, res) => {
 // Create a new resource
 const create = async (req, res) => {
   try {
-    await Galaxy.create(req.body);
-
-    res.status(201).redirect("/galaxies");
+    const galaxy = await Galaxy.create(req.body);
+    res.redirect(303, `/galaxies/${galaxy.id}`);
   } catch (e) {
     switch (e.name) {
       case "Invalid Content":
@@ -58,11 +57,11 @@ const create = async (req, res) => {
 // Update an existing resource
 const update = async (req, res) => {
   try {
-    const { id } = req.params;
-    const galaxy = await Galaxy.update(req.body, {
-      where: { id },
+    await Galaxy.update(req.body, {
+      where: { id: req.params.id },
     });
-    res.status(200).redirect("/galaxies");
+
+    res.redirect(302, `/galaxies/${req.params.id}`);
   } catch (e) {
     switch (e.name) {
       case "Content Not Found":
@@ -79,12 +78,11 @@ const update = async (req, res) => {
 // Remove a single resource
 const remove = async (req, res) => {
   try {
-    const { id } = req.params;
     const deleted = await Galaxy.destroy({
-      where: { id },
+      where: { id: req.params.id },
     });
     if (deleted) {
-      res.status(200).redirect("/galaxies");
+      res.redirect(302, `/galaxies`);
     }
   } catch (e) {
     switch (e.name) {
@@ -101,13 +99,11 @@ const remove = async (req, res) => {
 
 const form = async (req, res) => {
   if ("undefined" !== typeof req.params.id) {
-    const galaxy = await Galaxy.finByPk(req.params.id);
-    res.render("views/galaxy/edit.twig", { galaxy });
+    const galaxy = await Galaxy.findByPk(req.params.id);
+    res.render("views/galaxy/_form.twig", { galaxy });
   } else {
     res.render("views/galaxy/_form.twig");
   }
-
-  //res.status(200).json("Galaxy#form(:id)");
 };
 
 // Export all controller actions

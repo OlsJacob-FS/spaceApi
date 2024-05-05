@@ -3,7 +3,8 @@ const { Planet } = require("../models");
 const index = async (req, res) => {
   try {
     const planets = await Planet.findAll();
-    res.status(200).json(planets);
+    res.render("views/planet/index.twig", { planets });
+    //res.status(200).json(planets);
   } catch (e) {
     switch (e.name) {
       case "Invalid Content":
@@ -16,7 +17,8 @@ const index = async (req, res) => {
 const show = async (req, res) => {
   try {
     const planets = await Planet.findByPk(req.params.id);
-    res.status(200).json(planets);
+    res.render("views/planet/show.twig", { planets });
+    //res.status(200).json(planets);
   } catch (e) {
     switch (e.name) {
       case "Invalid Content":

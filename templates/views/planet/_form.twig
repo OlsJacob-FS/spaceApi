@@ -1,0 +1,41 @@
+{% if planet is defined %}
+    <form action="/planets/{{ planet.id }}" method="POST">
+    <input type="hidden" value="{{planet.id }}" />
+    {% else %}
+    <form action="/planets" method="POST">
+{% endif %}
+
+     {% block main %}
+    <a href="/planets">Home</a>
+    <div class="control">
+        <label>Name:</label>
+        <input 
+            type="text"
+            name="name" 
+            {% if planet is defined %}
+            value="{{ planet.name }}"
+            {% endif %}
+        />
+    </div>
+    <div class="control">
+        <label>Size:</label>
+        <input 
+            type="integer"
+            name="size" 
+            {% if planet is defined %}
+            value="{{ planet.size }}"
+            {% endif %}
+        />
+    </div>
+
+     <div class="control">
+        <label>Description:</label>
+        <textarea name="description">{{ planet.description }}</textarea>
+    </div>
+
+     <button type="submit">
+     {% if planet is defined %}Update{% else %}Create{% endif %} Galaxy
+     </button> 
+</form> 
+
+{% endblock %}
