@@ -3,6 +3,7 @@ const { Star } = require("../models");
 const index = async (req, res) => {
   try {
     const star = await Star.findAll();
+
     res.render("views/star/index.twig", { star });
   } catch (e) {
     switch (e.name) {
@@ -17,7 +18,7 @@ const show = async (req, res) => {
   try {
     const stars = await Star.findByPk(req.params.id);
     const planets = await stars.getPlanets();
-    res.render("views/star/show.twig", { galaxy });
+    res.render("views/star/show.twig", { stars });
   } catch (e) {
     switch (e.name) {
       case "Invalid Content":

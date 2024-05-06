@@ -1,21 +1,21 @@
 {% extends "layouts/base.twig" %}
 
-{% block pagename %}View all Galaxies{% endblock %}
+{% block pagename %}View all Stars{% endblock %}
 
 {% block main %}
-    <h1> All Galaxies </h1>
+    <h1> All Stars </h1>
     <ul>
-        {% for galaxy in galaxy %}
+        {% for star in star %}
         
         <li>
-        {{ galaxy.name }} - 
-            <a  href="/galaxies/{{ galaxy.id }}">show</a>  | 
-            <a  href="/galaxies/{{ galaxy.id }}/edit">Edit</a> |
-            <a  href="/galaxies/{{ galaxy.id }}/delete">Delete</a>
+        {{ star.name }} - 
+            <a  href="/stars/{{ star.id }}">show</a>  | 
+            <a  href="/stars/{{ star.id }}/edit">Edit</a> |
+            <a  href="/stars/{{ star.id }}/delete">Delete</a>
             
         </li>
         {% endfor %}
     </ul>
 
-    <a href="/galaxies/new">Create new Galaxy</a>
+    <a href="/stars/new">Create a new Star</a>
 {% endblock %}
